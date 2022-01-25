@@ -1,4 +1,17 @@
-let library = [];
+let library = [
+    {
+        title: 'Book1 (id: 0)',
+        author: 'Author 1',
+        pages: 11,
+        read: true,
+    },
+    {
+        title: 'Book2 (id: 1)',
+        author: 'Author 2',
+        pages: 22,
+        read: false,
+    },
+];
 
 //DOM elements
 const newBookBtn = document.getElementById('newBookBtn');
@@ -7,6 +20,8 @@ const clrFormBtn = document.getElementById('clrFormBtn');
 const closeFormBtn = document.getElementById('closeFormBtn');
 const inputs = document.querySelectorAll('input');
 const cards = document.getElementById('cards');
+let rmvBookBtns = [];
+let cardSwitches = [];
 
 addBookBtn.addEventListener('click', addToLibrary);
 newBookBtn.addEventListener('click', openForm);
@@ -36,12 +51,20 @@ Book.prototype.info = function () {
 function addToLibrary() {
     library.push(new Book(bkTitle.value, bkAuthor.value, bkPages.value, bkRead.checked));
     displayBooks();
+    closeForm();
+}
+
+//Remove book from library
+function removeBook(id) {
+    library.splice(id, 1);
+    displayBooks();
 }
 
 //Form functions
 
 function openForm() {
     document.getElementById("popupForm").style.display = "flex";
+    clearForm();
 }
 
 function closeForm() {
@@ -55,26 +78,63 @@ window.onclick = function (event) {
     }
 }
 
+//Creates and displays the cards
 function displayBooks() {
-    cards.innerHTML = "";
-    library.forEach((result, idx) => {
+    while (cards.firstChild) cards.removeChild(cards.firstChild);
+    library.forEach((book, idx) => {
         const card = document.createElement('div');
-        card.classlist = 'card-body';
+        
+        const cardTitle = document.createElement("h3");
+        const cardAuthor = document.createElement("p");
+        const cardPages = document.createElement("p");
+        const cardRead = document.createElement("input");
+        const rmvBtn = document.createElement("button");
+        
+        card.classList = 'card';
+        rmvBtn.classList = "rmvBookBtn";
+        rmvBtn.id = idx;
+        cardRead.classList = "cardReadBox";
+        cardRead.id = idx;
+        cardRead
+        cardRead.setAttribute("type", "checkbox");
+        book.read ? cardRead.setAttribute("checked",'') : cardRead.setAttribute("unchecked",'');
+        
+        cardTitle.textContent = `${book.title}`;
+        cardAuthor.textContent = `by: ${book.author}`;
+        cardPages.textContent = `${book.pages} pages`;
+        
 
-        const content =  `
-        <div class="card" id="card${idx}">
-          <div class="card-body">
-            <h5>${result.title}</h5>
-            <p>by: ${result.author}</p>
-            <p>${result.pages} pages</p>
-            <p>Read: ${result.read}</p>
-          </div>
-      </div>
-      `;
-    
-      // Append newyly created card element to the container
-      cards.innerHTML += content;
+        card.appendChild(cardTitle);
+        card.appendChild(cardAuthor);
+        card.appendChild(cardPages);
+        card.appendChild(cardRead);
+        card.appendChild(rmvBtn);
+        cards.appendChild(card);
     })
+    updateButtons();
+}
+
+//My likely dumb workaround to updating the delete buttons
+function updateButtons() {
+    rmvBookBtns = document.querySelectorAll('.rmvBookBtn');
+    cardReadBoxes = document.querySelectorAll('.cardReadBox')
+    rmvBookBtns.forEach((button) => {
+        button.addEventListener('click', () => {
+            removeBook(button.id);
+        });
+    });
+    cardReadBoxes.forEach((cardReadBox) => {
+        cardReadBox.addEventListener('change', () => {
+            changeRead(cardReadBox.id, cardReadBox.checked);
+        });
+    });
+}
+
+//Updates slider
+function changeRead(id, checked) {
+    library[id].read = checked;
+    cardReadBoxes[id].checked = library[id].read;
+    displayBooks();
 }
 
 function clearForm() {
