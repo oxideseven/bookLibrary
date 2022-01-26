@@ -9,7 +9,9 @@
     --dark2: #0d0d0d;
     --aem-purple: #8018c4;
     --aem-green: #04AA6D;
+	--aem-greenL: #00b874;
 	--aem-yellow: #da9600;
+	--aem-yellowL: #eea300;
 }
 
 *,
@@ -29,6 +31,7 @@ html {
 header {
 	background-color: var(--dark2);
 	color: var(--aem-yellow);
+	text-align: center;
 }
 
 body {
@@ -44,123 +47,110 @@ body {
 
 /* MAIN */
 
-/* - Cards */
+#newBookBtn {
+	background-color: var(--aem-green);
+	border: none;
+	width: 128px;
+	height: 32px;
+}
+
+#newBookBtn:hover {
+	background-color: var(--aem-greenL);
+}
+
+#cards {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 90%;
+
+}
+
 .card {
+	background-color: var(--dark1L);
+	border-radius: 24px;
 	padding: 1rem;
-	border: 1px solid black;
-	margin: 1rem;
+	margin: .5rem;
 	width: 300px;
 	min-height: 128px;
-}
-
- /* -- Card Slider */
-
-.cardSlider{
-	position: relative;
-	display: inline-block;
-	width: 48px;
-	height: 24px;
-}
-
-.cardSlider input { 
-	opacity: 0;
-	width: 0;
-	height: 0;
-}
-
-.cSlider {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: var(--dark1L);
-	-webkit-transition: .4s;
-	transition: .4s;
-	border-radius: 24px;
-}
-
-.cSlider:before {
-	position: absolute;
-	content: "";
-	height: 20px;
-	width: 20px;
-	left: 4px;
-	bottom: 2px;
-	background-color: white;
-	-webkit-transition: .4s;
-	transition: .4s;
-	border-radius: 50%;
-}
-
-input:checked + .cSlider {
-	background-color: var(--aem-green);
-}
-
-input:checked + .cSlider:before {
-	-webkit-transform: translateX(20px);
-	-ms-transform: translateX(20px);
-	transform: translateX(20px);
-}
-
-
-
-/* FORM */
-#popupForm {
+	display: flex;
 	flex-direction: column;
 }
 
-/* - Slider*/
-
-.switch{
-	position: relative;
-	display: inline-block;
-	width: 48px;
-	height: 24px;
-}
-
-.switch input{ 
-	opacity: 0;
-	width: 0;
-	height: 0;
-}
-
-.slider{
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+.rmvBookBtn, #closeFormBtn{
+	align-self: flex-end;
 	background-color: var(--dark1L);
-	-webkit-transition: .4s;
-	transition: .4s;
-	border-radius: 24px;
+	border: 0px;
+	color: var(--aem-yellow);
+	font-weight: 800;
 }
 
-.slider:before{
-	position: absolute;
-	content: "";
-	height: 20px;
-	width: 20px;
-	left: 4px;
-	bottom: 2px;
-	background-color: white;
-	-webkit-transition: .4s;
-	transition: .4s;
-	border-radius: 50%;
+.rmvBookBtn:hover, #closeFormBtn:hover {
+	color: var(--aem-yellowL);
+	font-weight: 100;
 }
 
-input:checked + .slider{
+/* FORM */
+
+.formPopup {
+	flex-direction: column;
+	align-items: center;
+	position: fixed;
+	left: 45%;
+	top: 25%;
+	transform: translate(-50%, 5%);
+	border: 3px solid #999999;
+	background-color: var(--dark1L);
+	padding: 12px;
+}
+
+.formPopup input[type=text]{
+	width: 100%;
+	padding: 15px;
+	margin: 5px 0 20px 0;
+	border: none;
+	background: #eee;
+}
+
+.formPopup input[type=text]:focus{
+	background-color: #ddd;
+	outline: none;
+}
+
+.errMsg {
+	display: none;
+	color: red;
+	width: 90%;
+	margin-top: -20px;
+	font-size: 24px;
+}
+
+.error-msg.active {
+	display: block;
+}
+
+.formButtons button{
+	border: none;
+	width: 128px;
+	height: 32px;
+}
+
+#addBookBtn {
 	background-color: var(--aem-green);
 }
 
-input:checked + .slider:before{
-	-webkit-transform: translateX(20px);
-	-ms-transform: translateX(20px);
-	transform: translateX(20px);
+#addBookBtn:hover {
+	background-color: var(--aem-greenL);
 }
+
+#clrFormBtn {
+	background-color: var(--aem-yellow);
+}
+
+#clrFormBtn:hover {
+	background-color: var(--aem-yellowL);
+}
+
+
 
 
 /* FOOTER */

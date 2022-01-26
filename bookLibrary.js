@@ -49,6 +49,7 @@ Book.prototype.info = function () {
 
 //Add a book to the library
 function addToLibrary() {
+    if 
     library.push(new Book(bkTitle.value, bkAuthor.value, bkPages.value, bkRead.checked));
     displayBooks();
     closeForm();
@@ -69,13 +70,15 @@ function openForm() {
 
 function closeForm() {
     document.getElementById("popupForm").style.display = "none";
+
 }
 
 window.onclick = function (event) {
-    let modal = document.getElementById('popupForm');
-    if (event.target == modal) {
-      closeForm();
+    if (event.target.className === "popupForm") {
+        closeForm();
+        console.log(event.target.className)
     }
+    console.log(event.target.className)
 }
 
 //Creates and displays the cards
@@ -87,28 +90,34 @@ function displayBooks() {
         const cardTitle = document.createElement("h3");
         const cardAuthor = document.createElement("p");
         const cardPages = document.createElement("p");
-        const cardRead = document.createElement("input");
+        const cardRead = document.createElement("span")
+        const readBox = document.createElement("input");
         const rmvBtn = document.createElement("button");
+        const readItems = document.createElement("div")
         
-        card.classList = 'card';
+        card.classList = "card";
         rmvBtn.classList = "rmvBookBtn";
+        readItems.classList = "readItems";
+        readBox.classList = "cardReadBox";
+        readBox.id = idx;
         rmvBtn.id = idx;
-        cardRead.classList = "cardReadBox";
-        cardRead.id = idx;
-        cardRead
-        cardRead.setAttribute("type", "checkbox");
-        book.read ? cardRead.setAttribute("checked",'') : cardRead.setAttribute("unchecked",'');
         
+        readBox.setAttribute("type", "checkbox");
+        book.read ? readBox.setAttribute("checked","") : readBox.setAttribute("unchecked","");
+        
+        rmvBtn.textContent = "X";
         cardTitle.textContent = `${book.title}`;
         cardAuthor.textContent = `by: ${book.author}`;
         cardPages.textContent = `${book.pages} pages`;
+        cardRead.textContent = "Read: ";
         
-
+        card.appendChild(rmvBtn);
         card.appendChild(cardTitle);
         card.appendChild(cardAuthor);
         card.appendChild(cardPages);
-        card.appendChild(cardRead);
-        card.appendChild(rmvBtn);
+        readItems.appendChild(cardRead);
+        readItems.appendChild(readBox);
+        card.appendChild(readItems)
         cards.appendChild(card);
     })
     updateButtons();
