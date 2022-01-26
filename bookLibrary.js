@@ -1,15 +1,9 @@
 let library = [
     {
-        title: 'Book1 (id: 0)',
-        author: 'Author 1',
-        pages: 11,
+        title: 'Caves of Steel',
+        author: 'Isaac Asimov',
+        pages: 224,
         read: true,
-    },
-    {
-        title: 'Book2 (id: 1)',
-        author: 'Author 2',
-        pages: 22,
-        read: false,
     },
 ];
 
@@ -49,7 +43,6 @@ Book.prototype.info = function () {
 
 //Add a book to the library
 function addToLibrary() {
-    if 
     library.push(new Book(bkTitle.value, bkAuthor.value, bkPages.value, bkRead.checked));
     displayBooks();
     closeForm();
